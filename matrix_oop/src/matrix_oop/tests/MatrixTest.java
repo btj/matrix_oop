@@ -22,6 +22,15 @@ class MatrixTest {
 				{0, 0}
 		};
 		assertTrue(Arrays.deepEquals(rows, matrix.getElementsRowArrays()));
+		
+		matrix.add(new Matrix(3, 2, new double[] {0, 0, 0, 0, 2, 2}));
+		double[][] rows2 = {
+				{1, 0},
+				{0, 1},
+				{2, 2}
+		};
+		assertTrue(Arrays.deepEquals(rows2, matrix.getElementsRowArrays()));
+		
 	}
 
 }
