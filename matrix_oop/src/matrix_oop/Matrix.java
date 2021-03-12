@@ -65,7 +65,7 @@ public class Matrix {
 		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++) {
 			rows[rowIndex] = new double[nbColumns];
 			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
-				rows[rowIndex][columnIndex] = elements[rowIndex * nbRows + columnIndex];
+				rows[rowIndex][columnIndex] = elements[rowIndex * nbColumns + columnIndex];
 		}
 		return rows;
 	}
