@@ -10,6 +10,8 @@ import java.util.stream.IntStream;
  * @invar | getElementsRowMajor() != null
  * @invar | getElementsRowMajor().length == getNbRows() * getNbColumns()
  * @invar | 1 <= getNbColumns() 
+ * 
+ * @immutable
  */
 public class Matrix {
 
