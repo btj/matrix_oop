@@ -111,6 +111,11 @@ public class Matrix {
 	 * @post | IntStream.range(0, getNbRows() * getNbColumns()).allMatch(i ->
 	 *       |     getElementsRowMajor()[i] == old(getElementsRowMajor())[i] + other.getElementsRowMajor()[i])
 	 */
-	public void add(Matrix other) { throw new RuntimeException("Not yet implemented"); }
+	public void add(Matrix other) {
+		int nbColumns = elements.length / nbRows;
+		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++)
+			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
+				elements[rowIndex * nbColumns + columnIndex] += other.elements[rowIndex * nbColumns + columnIndex];
+	}
 	
 }
