@@ -14,21 +14,23 @@ import java.util.stream.IntStream;
 public class Matrix {
 	
 	/**
-	 * @invar | 1 <= nbRows
 	 * @invar | elements != null
-	 * @invar | elements.length % nbRows == 0
+	 * @invar | 1 <= elements.length
+	 * @invar | 1 <= nbColumns
+	 * @invar | Arrays.stream(elements).allMatch(row -> row != null && row.length == nbColumns)
 	 */
-	private int nbRows;
+	private int nbColumns;
 	/**
 	 * @representationObject
+	 * @representationObjects
 	 */
-	private double[] elements;
+	private double[][] elements;
 
 	/**
 	 * @basic
 	 */
 	public int getNbRows() {
-		return nbRows;
+		return elements.length;
 	}
 
 	/**
@@ -37,14 +39,18 @@ public class Matrix {
 	 * @creates | result
 	 */
 	public double[] getElementsRowMajor() {
-		return elements.clone();
+		double[] result = new double[elements.length * nbColumns];
+		for (int rowIndex = 0; rowIndex < elements.length; rowIndex++)
+			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
+				result[rowIndex * nbColumns + columnIndex] = elements[rowIndex][columnIndex];
+		return result;
 	}
 
 	/**
 	 * @post | result == getElementsRowMajor().length / getNbRows()
 	 */
 	public int getNbColumns() {
-		return elements.length / nbRows;
+		return nbColumns;
 	}
 	
 	/**
@@ -58,14 +64,12 @@ public class Matrix {
 	 * @creates | result, ...result
 	 */
 	public double[][] getElementsRowArrays() {
-		int nbColumns = getNbColumns();
-		double[][] rows = new double[nbRows][];
-		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++) {
-			rows[rowIndex] = new double[nbColumns];
-			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
-				rows[rowIndex][columnIndex] = elements[rowIndex * nbColumns + columnIndex];
-		}
-		return rows;
+		double[][] result = new double[elements.length][];
+		for (int rowIndex = 0; rowIndex < elements.length; rowIndex++)
+			result[rowIndex] = elements[rowIndex].clone();
+		return result;
+		
+//		return Arrays.stream(elements).map(row -> row.clone()).toArray(n -> new double[n][]);
 	}
 
 	/**
@@ -92,8 +96,11 @@ public class Matrix {
 		if (elementsRowMajor.length != nbRows * nbColumns)
 			throw new IllegalArgumentException("length of `elementsRowMajor` is wrong");
 		
-		this.nbRows = nbRows;
-		this.elements = elementsRowMajor.clone();
+		this.nbColumns = nbColumns;
+		this.elements = new double[nbRows][nbColumns];
+		for (int rowIndex = 0; rowIndex < elements.length; rowIndex++)
+			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
+				elements[rowIndex][columnIndex] = elementsRowMajor[rowIndex * nbColumns + columnIndex];
 	}
 	
 	/**
@@ -117,10 +124,9 @@ public class Matrix {
 		if (other.getNbRows() != this.getNbRows() || other.getNbColumns() != this.getNbColumns())
 			throw new IllegalArgumentException("`other`'s shape is wrong");
 		
-		int nbColumns = elements.length / nbRows;
-		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++)
+		for (int rowIndex = 0; rowIndex < elements.length; rowIndex++)
 			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
-				elements[rowIndex * nbColumns + columnIndex] += other.elements[rowIndex * nbColumns + columnIndex];
+				elements[rowIndex][columnIndex] += other.elements[rowIndex][columnIndex];
 	}
 	
 }
