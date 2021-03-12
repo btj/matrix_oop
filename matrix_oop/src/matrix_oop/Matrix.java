@@ -84,6 +84,18 @@ public class Matrix {
 	 * @post | getNbRows() == nbRows
 	 * @post | Arrays.equals(getElementsRowMajor(), elementsRowMajor)
 	 */
-	public Matrix(int nbRows, int nbColumns, double[] elementsRowMajor) { throw new RuntimeException("Not yet implemented"); }
+	public Matrix(int nbRows, int nbColumns, double[] elementsRowMajor) {
+		if (nbRows < 1)
+			throw new IllegalArgumentException("`nbRows` is less than 1");
+		if (nbColumns < 1)
+			throw new IllegalArgumentException("`nbColumns` is less than 1");
+		if (elementsRowMajor == null)
+			throw new IllegalArgumentException("`elementsRowMajor` is null");
+		if (elementsRowMajor.length != nbRows * nbColumns)
+			throw new IllegalArgumentException("length of `elementsRowMajor` is wrong");
+		
+		this.nbRows = nbRows;
+		this.elements = elementsRowMajor.clone();
+	}
 	
 }
