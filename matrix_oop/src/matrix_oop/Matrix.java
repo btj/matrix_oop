@@ -14,22 +14,40 @@ import java.util.stream.IntStream;
  * @immutable
  */
 public class Matrix {
+	
+	/**
+	 * @invar | 1 <= nbRows
+	 * @invar | elements != null
+	 * @invar | elements.length % nbRows == 0
+	 */
+	private int nbRows;
+	/**
+	 * @representationObject
+	 */
+	private double[] elements;
 
 	/**
 	 * @basic
 	 */
-	public int getNbRows() { throw new RuntimeException("Not yet implemented"); }
+	public int getNbRows() {
+		return nbRows;
+	}
 
 	/**
+	 * @inspects | this
 	 * @basic
 	 * @creates | result
 	 */
-	public double[] getElementsRowMajor() { throw new RuntimeException("Not yet implemented"); }
+	public double[] getElementsRowMajor() {
+		return elements.clone();
+	}
 
 	/**
 	 * @post | result == getElementsRowMajor().length / getNbRows()
 	 */
-	public int getNbColumns() { throw new RuntimeException("Not yet implemented"); }
+	public int getNbColumns() {
+		return elements.length / nbRows;
+	}
 	
 	/**
 	 * @post | result != null
@@ -41,7 +59,16 @@ public class Matrix {
 	 * 
 	 * @creates | result, ...result
 	 */
-	public double[][] getElementsRowArrays() { throw new RuntimeException("Not yet implemented"); }
+	public double[][] getElementsRowArrays() {
+		int nbColumns = getNbColumns();
+		double[][] rows = new double[nbRows][];
+		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++) {
+			rows[rowIndex] = new double[nbColumns];
+			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
+				rows[rowIndex][columnIndex] = elements[rowIndex * nbRows + columnIndex];
+		}
+		return rows;
+	}
 
 	/**
 	 * Initializes this object so that it represents the matrix with the given number of rows and columns
