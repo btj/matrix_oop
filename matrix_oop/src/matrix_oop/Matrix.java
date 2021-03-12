@@ -41,6 +41,20 @@ public class Matrix {
 	 */
 	public double[][] getElementsRowArrays() { throw new RuntimeException("Not yet implemented"); }
 
+	/**
+	 * Initializes this object so that it represents the matrix with the given number of rows and columns
+	 * and the given elements. The elements are given as an array in row major order.
+	 * 
+	 * @inspects | elementsRowMajor
+	 * 
+	 * @throws IllegalArgumentException | nbRows < 1
+	 * @throws IllegalArgumentException | nbColumns < 1
+	 * @throws IllegalArgumentException | elementsRowMajor == null
+	 * @throws IllegalArgumentException | elementsRowMajor.length != nbRows * nbColumns
+	 * 
+	 * @post | getNbRows() == nbRows
+	 * @post | Arrays.equals(getElementsRowMajor(), elementsRowMajor)
+	 */
 	public Matrix(int nbRows, int nbColumns, double[] elementsRowMajor) { throw new RuntimeException("Not yet implemented"); }
 	
 }
