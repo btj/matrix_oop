@@ -10,8 +10,6 @@ import java.util.stream.IntStream;
  * @invar | getElementsRowMajor() != null
  * @invar | getElementsRowMajor().length == getNbRows() * getNbColumns()
  * @invar | 1 <= getNbColumns() 
- * 
- * @immutable
  */
 public class Matrix {
 	
@@ -97,5 +95,22 @@ public class Matrix {
 		this.nbRows = nbRows;
 		this.elements = elementsRowMajor.clone();
 	}
+	
+	/**
+	 * Adds the given matrix to this matrix.
+	 * 
+	 * @throws IllegalArgumentException | other == null
+	 * @throws IllegalArgumentException | other.getNbRows() != this.getNbRows()
+	 * @throws IllegalArgumentException | other.getNbColumns() != this.getNbColumns()
+	 * 
+	 * @mutates | this
+	 * @inspects | other
+	 * 
+	 * @post | getNbRows() == old(getNbRows())
+	 * @post | getNbColumns() == old(getNbColumns())
+	 * @post | IntStream.range(0, getNbRows() * getNbColumns()).allMatch(i ->
+	 *       |     getElementsRowMajor()[i] == old(getElementsRowMajor())[i] + other.getElementsRowMajor()[i])
+	 */
+	public void add(Matrix other) { throw new RuntimeException("Not yet implemented"); }
 	
 }
