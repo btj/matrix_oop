@@ -22,6 +22,7 @@ public class Matrix {
 	 */
 	private int nbRows;
 	/**
+	 * Stores this matrix's elements in column-major order.
 	 * @representationObject
 	 */
 	private double[] elements;
@@ -39,7 +40,11 @@ public class Matrix {
 	 * @creates | result
 	 */
 	public double[] getElementsRowMajor() {
-		return elements.clone();
+		double[] result = new double[elements.length];
+		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++)
+			for (int columnIndex = 0; columnIndex < elements.length / nbRows; columnIndex++)
+				result[rowIndex * elements.length / nbRows + columnIndex] = elements[columnIndex * nbRows + rowIndex];
+		return result;
 	}
 
 	/**
@@ -65,7 +70,7 @@ public class Matrix {
 		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++) {
 			rows[rowIndex] = new double[nbColumns];
 			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
-				rows[rowIndex][columnIndex] = elements[rowIndex * nbColumns + columnIndex];
+				rows[rowIndex][columnIndex] = elements[columnIndex * nbRows + rowIndex];
 		}
 		return rows;
 	}
@@ -95,7 +100,11 @@ public class Matrix {
 			throw new IllegalArgumentException("length of `elementsRowMajor` is wrong");
 		
 		this.nbRows = nbRows;
-		this.elements = elementsRowMajor.clone();
+		this.elements = new double[nbRows * nbColumns];
+		for (int rowIndex = 0; rowIndex < nbRows; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < nbColumns; columnIndex++)
+				elements[columnIndex * nbRows + rowIndex] = elementsRowMajor[rowIndex * nbColumns + columnIndex];
+		}
 	}
 	
 }
